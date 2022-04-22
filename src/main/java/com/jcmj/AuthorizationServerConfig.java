@@ -32,8 +32,15 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 				.secret(passwordEncoder.encode("abc123"))
 				.authorizedGrantTypes("password", "refresh_token")
 				.scopes("write", "read")
-				.accessTokenValiditySeconds(60 * 60 * 6);
-		
+				.accessTokenValiditySeconds(60 * 60 * 6) //6 horas
+				.refreshTokenValiditySeconds(60 * 24 *60 * 60) // 60 dias
+		         
+				.and()
+					.withClient("consumidor")
+					.secret(passwordEncoder.encode("abc123"))
+					.authorizedGrantTypes("client_credentials")
+					.scopes("read");
+					
 	}
 	
 	@Override
@@ -46,6 +53,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints
 		  .authenticationManager(authenticationManager)
-		  .userDetailsService(detailsService);
+		  .userDetailsService(detailsService)
+		  .reuseRefreshTokens(false);
 	}
 }
