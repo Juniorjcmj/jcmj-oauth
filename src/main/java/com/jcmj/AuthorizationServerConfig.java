@@ -3,6 +3,7 @@ package com.jcmj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -18,6 +19,8 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	@Autowired
+	private UserDetailsService detailsService;
 	
 	
 	@Override
@@ -27,7 +30,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 			.inMemory()
 				.withClient("jcmj")
 				.secret(passwordEncoder.encode("abc123"))
-				.authorizedGrantTypes("password")
+				.authorizedGrantTypes("password", "refresh_token")
 				.scopes("write", "read")
 				.accessTokenValiditySeconds(60 * 60 * 6);
 		
@@ -41,7 +44,8 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		
-		endpoints.authenticationManager(authenticationManager);
+		endpoints
+		  .authenticationManager(authenticationManager)
+		  .userDetailsService(detailsService);
 	}
 }
