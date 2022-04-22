@@ -27,7 +27,8 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 				.withClient("jcmj")
 				.secret(passwordEncoder.encode("abc123"))
 				.authorizedGrantTypes("password")
-				.scopes("write", "read");
+				.scopes("write", "read")
+				.accessTokenValiditySeconds(60 * 60 * 6);
 		
 	}
 	
