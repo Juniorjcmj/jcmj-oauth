@@ -34,12 +34,19 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 				.scopes("write", "read")
 				.accessTokenValiditySeconds(60 * 60 * 6) //6 horas
 				.refreshTokenValiditySeconds(60 * 24 *60 * 60) // 60 dias
-		         
-				.and()
-					.withClient("consumidor")
-					.secret(passwordEncoder.encode("abc123"))
-					.authorizedGrantTypes("client_credentials")
-					.scopes("read");
+				
+		     .and()
+				.withClient("analitics")
+				.secret(passwordEncoder.encode("abc123"))
+				.authorizedGrantTypes("authorization_code")
+				.scopes("write")
+				.redirectUris("http://casanobreweb.com.br")
+				
+		     .and()
+		     	.withClient("consumidor")
+				.secret(passwordEncoder.encode("abc123"))
+				.authorizedGrantTypes("client_credentials")
+				.scopes("read");
 					
 	}
 	
