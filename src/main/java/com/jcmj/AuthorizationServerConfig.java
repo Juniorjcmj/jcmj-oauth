@@ -34,6 +34,8 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	private UserDetailsService detailsService;	
 	
 	@Autowired
+	private JwtKeyStoreProperties jwtKeyStoreProperties;    
+	@Autowired
 	//private RedisConnectionFactory connectionFactory;
 	
 	@Override
@@ -93,9 +95,9 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
 		//jwtAccessTokenConverter.setSigningKey("sustentafogoqueavitoriaenossa/marinhadobrasil");
-		 var jksResource = new ClassPathResource("keystores/algafood.jks");
-		 var keyStorePass = "123456";
-		 var keyPairAlias = "algafood";
+		 var jksResource = new ClassPathResource(jwtKeyStoreProperties.getPath());
+		 var keyStorePass = jwtKeyStoreProperties.getPassword();
+		 var keyPairAlias = jwtKeyStoreProperties.getKeypairAlias();
 		 
 		 var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource,keyStorePass.toCharArray());
 		 var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
