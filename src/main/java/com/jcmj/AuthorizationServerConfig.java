@@ -80,8 +80,8 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 		  .authenticationManager(authenticationManager)
 		  .userDetailsService(detailsService)
 		  .reuseRefreshTokens(false)
-		  .tokenGranter(tokenGranter(endpoints))
-		  .tokenStore(redisTokenStore());
+		  .tokenGranter(tokenGranter(endpoints));
+		 // .tokenStore(redisTokenStore());
 		
 	}
 	//conecção com banco de dados redis 
