@@ -45,6 +45,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 				.authorizedGrantTypes("authorization_code")
 				.scopes("write")
 				.redirectUris("http://casanobreweb.com.br")
+//http://localhost:98/oauth/authorize?response_type=code&client_id=analitics&redirect_uri=http://casanobreweb.com.br&code_challenge=fsdhfshdjfhsdfhskdhfk&code_challenge_method=plain
 				
 				.and()
 				.withClient("webadmin")
@@ -64,7 +65,8 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		//security.checkTokenAccess("isAuthenticated()");
-		security.checkTokenAccess("permitAll()");
+		security.checkTokenAccess("permitAll()")
+		.allowFormAuthenticationForClients();
 	}
 	
 	@Override
