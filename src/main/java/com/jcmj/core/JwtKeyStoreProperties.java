@@ -1,4 +1,4 @@
-package com.jcmj;
+package com.jcmj.core;
 
 import javax.validation.constraints.NotBlank;
 

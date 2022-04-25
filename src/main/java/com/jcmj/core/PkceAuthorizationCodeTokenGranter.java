@@ -1,4 +1,4 @@
-package com.jcmj;
+package com.jcmj.core;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 

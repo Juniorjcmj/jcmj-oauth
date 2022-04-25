@@ -1,4 +1,4 @@
-package com.jcmj;
+package com.jcmj.core;
 
 import java.util.Arrays;
 
@@ -17,22 +17,17 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
-	
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{	
 	     
-       @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       	   auth.inMemoryAuthentication()
-	    	   .withUser("admin")
-	    	   		.password(bCryptPasswordEncoder().encode("123"))
-	    	   		.roles("ADMIN")
-    	       .and()
-    	       .withUser("junior")
-    	            .password(bCryptPasswordEncoder().encode("123"))
-    	            .roles("ADMIN");
-    	   	
-    }
-       
+	/*
+	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
+	 * Exception { auth.inMemoryAuthentication() .withUser("admin")
+	 * .password(bCryptPasswordEncoder().encode("123")) .roles("ADMIN") .and()
+	 * .withUser("junior") .password(bCryptPasswordEncoder().encode("123"))
+	 * .roles("ADMIN");
+	 * 
+	 * }
+	 */
    @Bean    
    CorsConfigurationSource corsConfigurationSource() {
 	   CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
@@ -52,11 +47,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		// TODO Auto-generated method stub
 		return super.authenticationManager();
 	}
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-    	
-    	return super.userDetailsService();
-    }
+	/*
+	 * @Bean
+	 * 
+	 * @Override protected UserDetailsService userDetailsService() {
+	 * 
+	 * return super.userDetailsService(); }
+	 */
     
 }

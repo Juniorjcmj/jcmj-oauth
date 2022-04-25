@@ -1,4 +1,4 @@
-package com.jcmj;
+package com.jcmj.core;
 
 import java.util.Arrays;
 
@@ -77,6 +77,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		//security.checkTokenAccess("isAuthenticated()");
 		security.checkTokenAccess("permitAll()")
+		.tokenKeyAccess("permitAll()")
 		.allowFormAuthenticationForClients();
 	}
 	
