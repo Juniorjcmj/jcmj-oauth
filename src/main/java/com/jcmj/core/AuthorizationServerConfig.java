@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,10 +16,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -83,11 +81,15 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		var enhanceChain = new TokenEnhancerChain();
+		enhanceChain.setTokenEnhancers(
+				Arrays.asList(new JwtCustomClaimsTokenEnhancer(),jwtAccessTokenConverter()));
 		endpoints
 		  .authenticationManager(authenticationManager)
 		  .userDetailsService(detailsService)
 		  .reuseRefreshTokens(false)
 		  .accessTokenConverter(jwtAccessTokenConverter())
+		  .tokenEnhancer(enhanceChain)
 		  .tokenGranter(tokenGranter(endpoints));
 		 // .tokenStore(redisTokenStore());
 		
